@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Essentials Guide — For A/L Students</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-dark: #0F6E56;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --red: #A32D2D;
+    --red-light: #FCEBEB;
+    --gray: #5F5E5A;
+    --gray-light: #F1EFE8;
+    --text: #1a1a18;
+    --text-muted: #5F5E5A;
+    --border: #e2e0d8;
+    --bg: #faf9f6;
+    --white: #ffffff;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .hero {
+    background: var(--green-dark);
+    color: white;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #a0f0d0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: white;
+  }
+  .hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    max-width: 500px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.75rem;
+    flex-wrap: wrap;
+  }
+  .hero-stat { }
+  .hero-stat .num {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: white;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 2px;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .progress-inner { max-width: 720px; margin: 0 auto; }
+  .prog-row { display: flex; align-items: center; gap: 12px; }
+  .prog-bar { flex: 1; height: 6px; background: var(--gray-light); border-radius: 3px; overflow: hidden; }
+  .prog-fill { height: 100%; background: var(--green); border-radius: 3px; width: 0%; transition: width 0.4s ease; }
+  .prog-label { font-size: 12px; color: var(--text-muted); white-space: nowrap; font-family: 'DM Mono', monospace; }
+
+  /* MAIN */
+  .main { max-width: 720px; margin: 0 auto; padding: 2rem; }
+
+  /* LEVEL SECTION */
+  .level-section { margin-bottom: 2.5rem; }
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .level-num {
+    background: var(--green);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .level-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .level-sub { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+  /* TOPIC CARD */
+  .topic-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .topic-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .topic-card.done { border-color: var(--green); }
+
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .topic-icon {
+    width: 36px; height: 36px;
+    background: var(--green-light);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .topic-done-icon {
+    width: 36px; height: 36px;
+    background: var(--green);
+    border-radius: 8px;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    color: white;
+  }
+  .topic-card.done .topic-icon { display: none; }
+  .topic-card.done .topic-done-icon { display: flex; }
+
+  .topic-text { flex: 1; }
+  .topic-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .topic-desc { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .topic-chevron {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .topic-card.open .topic-chevron { transform: rotate(180deg); }
+
+  /* TOPIC BODY */
+  .topic-body {
+    display: none;
+    padding: 0 1.25rem 1.25rem;
+    border-top: 1px solid var(--gray-light);
+  }
+  .topic-card.open .topic-body { display: block; }
+
+  .steps-list { list-style: none; margin: 1rem 0 0; }
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-light);
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-n {
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+    min-width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .shortcut {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--gray-light);
+    color: var(--gray);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  .tip {
+    margin-top: 12px;
+    background: var(--amber-light);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: #633806;
+    line-height: 1.5;
+  }
+  .tip strong { color: var(--amber); }
+
+  .warning {
+    margin-top: 12px;
+    background: var(--red-light);
+    border-left: 3px solid var(--red);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: #501313;
+    line-height: 1.5;
+  }
+
+  .practice {
+    margin-top: 12px;
+    background: var(--blue-light);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: var(--blue);
+    line-height: 1.5;
+  }
+  .practice strong { display: block; margin-bottom: 2px; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .mark-done-btn {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    border: 1.5px solid var(--green);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+  .mark-done-btn:hover { background: #c8eed9; }
+  .topic-card.done .mark-done-btn {
+    background: var(--green);
+    color: white;
+    border-color: var(--green-dark);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 13px;
+    margin-top: 3rem;
+  }
+  .footer strong { color: white; }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap { display: none; }
+    .topic-body { display: block !important; }
+    .topic-card { break-inside: avoid; }
+    .mark-done-btn { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1.25rem; }
+    .hero h1 { font-size: 1.5rem; }
+    .main { padding: 1.25rem; }
+    .hero-stats { gap: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">A/L Student IT Guide — Sri Lanka</span>
+    <h1>IT Essentials<br>Learning Plan</h1>
+    <p>A step-by-step practical guide to computer and internet skills — from basic use to career-ready tools.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">5</div><div class="lbl">Levels</div></div>
+      <div class="hero-stat"><div class="num">18</div><div class="lbl">Topics</div></div>
+      <div class="hero-stat"><div class="num">0</div><div class="lbl" id="done-count">Completed</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="prog-row">
+      <span style="font-size:12px;color:var(--text-muted);">Progress</span>
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+      <span class="prog-label" id="prog-text">0 / 18</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- LEVEL 1 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div class="level-num">1</div>
+      <div class="level-title">Basic computer use</div>
+      <div class="level-sub">Start here</div>
+    </div>
+
+    <div class="topic-card" id="c1">
+      <div class="topic-header" onclick="toggleCard('c1')">
+        <div class="topic-icon">💻</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Turning on & using a computer</div>
+          <div class="topic-desc">Desktop, laptop, touchpad basics</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Press the <strong>power button</strong> and wait for the desktop to fully load before doing anything</span></li>
+          <li class="step-item"><span class="step-n">2</span><span><strong>Mouse:</strong> left click = select, right click = options menu, scroll wheel = scroll up/down the page</span></li>
+          <li class="step-item"><span class="step-n">3</span><span><strong>Touchpad (laptop):</strong> tap once = click, two-finger tap = right click, two-finger scroll = scroll page</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>To shut down properly: click <strong>Start → Power → Shut down.</strong> Never just close the lid without shutting down properly</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Practice: open a programme (e.g. Notepad), close it, open another one, switch between open windows</span></li>
+        </ul>
+        <div class="tip"><strong>Tip:</strong> Never press and hold the power button to force off — always use proper Shut Down unless the computer is completely frozen</div>
+        <button class="mark-done-btn" onclick="markDone('c1')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c2">
+      <div class="topic-header" onclick="toggleCard('c2')">
+        <div class="topic-icon">📁</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Files & folders</div>
+          <div class="topic-desc">Save, copy, move, rename, delete</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Open File Explorer: press <span class="shortcut">Windows + E</span> — this shows all your files and folders</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Create a new folder: right click on empty space → New → Folder → type a name → press Enter</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Copy a file: right click → Copy → go to new folder → right click → Paste (or <span class="shortcut">Ctrl+C</span> then <span class="shortcut">Ctrl+V</span>)</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Rename: right click file → Rename → type new name → press Enter</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Delete: select the file → press <span class="shortcut">Delete</span> key → it goes to Recycle Bin (not permanently deleted yet)</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Restore a deleted file: open Recycle Bin on desktop → right click the file → Restore</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Create a folder called "My Documents", create a text file inside it, rename it, then delete it and restore it from Recycle Bin</div>
+        <button class="mark-done-btn" onclick="markDone('c2')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c3">
+      <div class="topic-header" onclick="toggleCard('c3')">
+        <div class="topic-icon">⌨️</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Keyboard shortcuts</div>
+          <div class="topic-desc">Save time with Ctrl+C, Ctrl+V and more</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span><span class="shortcut">Ctrl + C</span> = Copy selected text or file</span></li>
+          <li class="step-item"><span class="step-n">2</span><span><span class="shortcut">Ctrl + V</span> = Paste what you copied</span></li>
+          <li class="step-item"><span class="step-n">3</span><span><span class="shortcut">Ctrl + X</span> = Cut (moves the item instead of copying)</span></li>
+          <li class="step-item"><span class="step-n">4</span><span><span class="shortcut">Ctrl + Z</span> = Undo last action — very useful if you make a mistake!</span></li>
+          <li class="step-item"><span class="step-n">5</span><span><span class="shortcut">Ctrl + S</span> = Save the current document</span></li>
+          <li class="step-item"><span class="step-n">6</span><span><span class="shortcut">Ctrl + A</span> = Select all text or files at once</span></li>
+          <li class="step-item"><span class="step-n">7</span><span><span class="shortcut">Alt + Tab</span> = Switch between open windows quickly</span></li>
+          <li class="step-item"><span class="step-n">8</span><span><span class="shortcut">Windows key</span> = Open or close the Start menu</span></li>
+          <li class="step-item"><span class="step-n">9</span><span><span class="shortcut">Ctrl + P</span> = Print the current page or document</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Open Notepad → type your full name → select all → copy → paste it 5 times below → undo using Ctrl+Z</div>
+        <button class="mark-done-btn" onclick="markDone('c3')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c4">
+      <div class="topic-header" onclick="toggleCard('c4')">
+        <div class="topic-icon">📶</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Connecting to the internet</div>
+          <div class="topic-desc">WiFi, mobile hotspot, troubleshooting</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Click the WiFi icon at the bottom right of the screen → select your network name → enter password → click Connect</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Mobile hotspot: on your phone go to Settings → Hotspot → turn on → connect your laptop to it like normal WiFi</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Check if connected: open browser → type <strong>google.com</strong> → if page loads, you are connected</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>If not connecting: click WiFi icon → Disconnect → wait 5 seconds → Connect again</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>If still no connection: restart the router (turn off, wait 30 seconds, turn on again)</span></li>
+        </ul>
+        <div class="warning"><strong>Safety:</strong> Never connect to unknown public WiFi (at shops, parks) for important tasks like email login or banking — your information can be stolen</div>
+        <button class="mark-done-btn" onclick="markDone('c4')">✓ Mark as done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div class="level-num">2</div>
+      <div class="level-title">Email & accounts</div>
+      <div class="level-sub">Very important for university applications</div>
+    </div>
+
+    <div class="topic-card" id="c5">
+      <div class="topic-header" onclick="toggleCard('c5')">
+        <div class="topic-icon">👤</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Sign up — creating an account</div>
+          <div class="topic-desc">Gmail, websites, government portals</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Go to the website (e.g. gmail.com) → click <strong>"Create account"</strong> or <strong>"Sign up"</strong> button</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Fill the form: First name, Last name, choose a username (e.g. dilnishaperera2005@gmail.com)</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Create a strong password — use CAPITAL letters + small letters + numbers + symbols (e.g. Dilni@2005)</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Enter your phone number → you will receive an SMS code → enter it to verify</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Account is created — write the email address and password in a safe notebook at home</span></li>
+        </ul>
+        <div class="tip"><strong>Important:</strong> Use your real name in your email address (e.g. dilnishaperera, not cutegirl123) — this email will be used for job applications and university forms</div>
+        <button class="mark-done-btn" onclick="markDone('c5')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c6">
+      <div class="topic-header" onclick="toggleCard('c6')">
+        <div class="topic-icon">🔑</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Sign in & forgot password</div>
+          <div class="topic-desc">Logging in, resetting passwords</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Go to the website → click <strong>"Sign in"</strong> or <strong>"Log in"</strong> → enter your email → enter password → click Sign in</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Forgot password: click <strong>"Forgot password?"</strong> → enter your email address → check your email inbox for a reset link</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Click the reset link in the email → create a new password → sign in with the new password</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>On shared computers (school, library): always sign out after use — click profile photo (top right) → Sign out</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Never tick "Remember password" on computers that are not yours</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Sign in to Gmail → sign out → use the "Forgot password" flow to reset and sign back in</div>
+        <button class="mark-done-btn" onclick="markDone('c6')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c7">
+      <div class="topic-header" onclick="toggleCard('c7')">
+        <div class="topic-icon">✉️</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Sending & receiving email</div>
+          <div class="topic-desc">Gmail — compose, reply, attach files</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Open <strong>gmail.com</strong> → sign in → your Inbox shows all received emails</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Send a new email: click the <strong>Compose</strong> button (pencil icon, top left)</span></li>
+          <li class="step-item"><span class="step-n">3</span><span><strong>To:</strong> type the recipient's full email address (e.g. admissions@slithm.edu.lk)</span></li>
+          <li class="step-item"><span class="step-n">4</span><span><strong>Subject:</strong> write a short, clear title (e.g. "Inquiry about Scholarship — BSc Degree 2026")</span></li>
+          <li class="step-item"><span class="step-n">5</span><span><strong>Body:</strong> write your message politely. Start with a greeting, state your purpose, end with your name</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Attach a file: click the <strong>paperclip icon</strong> → select file → wait for upload → then click Send</span></li>
+          <li class="step-item"><span class="step-n">7</span><span>Reply: open an email → click <strong>Reply</strong> → type your response → click Send</span></li>
+          <li class="step-item"><span class="step-n">8</span><span><strong>CC</strong> = send a copy to another person too. <strong>BCC</strong> = send a hidden copy (they don't see each other)</span></li>
+        </ul>
+        <div class="tip"><strong>Tip:</strong> Always write a proper Subject line — emails with no subject look unprofessional and may be ignored or go to spam</div>
+        <div class="practice"><strong>Practice task</strong>Compose a formal email to an imaginary institute asking about course fees — include your name and contact in the message body</div>
+        <button class="mark-done-btn" onclick="markDone('c7')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c8">
+      <div class="topic-header" onclick="toggleCard('c8')">
+        <div class="topic-icon">🔒</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Strong passwords & account safety</div>
+          <div class="topic-desc">Protect your accounts from hackers</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>A strong password = at least 8 characters, with Capital letters + small letters + numbers + symbols</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Never use: your name, birthday, "password", "123456" — hackers try these first</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Use different passwords for different accounts — especially your main email and bank accounts</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Enable 2-step verification on Gmail: Settings → Security → 2-step verification → Turn on</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Never share your password with anyone — even close friends. Real companies will NEVER ask for your password</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Write passwords in a physical notebook kept safely at home — not saved in WhatsApp messages or phone notes</span></li>
+        </ul>
+        <div class="warning"><strong>Warning:</strong> If someone says they are from Google, Gmail, or a bank and asks for your password — it is a scam. Hang up or close the message immediately</div>
+        <button class="mark-done-btn" onclick="markDone('c8')">✓ Mark as done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div class="level-num">3</div>
+      <div class="level-title">Documents & online tools</div>
+      <div class="level-sub">For assignments, forms & applications</div>
+    </div>
+
+    <div class="topic-card" id="c9">
+      <div class="topic-header" onclick="toggleCard('c9')">
+        <div class="topic-icon">📄</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Google Docs / Microsoft Word</div>
+          <div class="topic-desc">Type, format, save and share documents</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Open <strong>docs.google.com</strong> → sign in with Gmail → click <strong>"+ Blank"</strong> to start a new document</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Type your content — Google Docs auto-saves every few seconds (you will see "Saved" at the top)</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Format text: select text → click <strong>B</strong> (bold), <strong>I</strong> (italic), <strong>U</strong> (underline) in the toolbar</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Change font size: select text → click the number box in toolbar → type the size you want (e.g. 12)</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Download as Word file: File → Download → Microsoft Word (.docx)</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Download as PDF: File → Download → PDF Document (.pdf)</span></li>
+          <li class="step-item"><span class="step-n">7</span><span>Share with someone: click blue <strong>Share</strong> button (top right) → enter their email → click Send</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Type a formal letter to SLITHM requesting information about their scholarship scheme — download it as PDF</div>
+        <button class="mark-done-btn" onclick="markDone('c9')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c10">
+      <div class="topic-header" onclick="toggleCard('c10')">
+        <div class="topic-icon">📊</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Google Sheets — basic spreadsheet</div>
+          <div class="topic-desc">Tables, simple formulas, budget tracking</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Open <strong>sheets.google.com</strong> → click <strong>"+ Blank"</strong> to start a new spreadsheet</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Each box is called a <strong>cell</strong> — cells are named by column letter + row number (e.g. A1, B2, C3)</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Click a cell and start typing — press Tab to move right, press Enter to move down</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Simple sum formula: click empty cell → type <span class="shortcut">=SUM(A1:A5)</span> → press Enter — adds all values from A1 to A5</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>You already know maths — spreadsheet formulas are just maths written in cells. Example: <span class="shortcut">=A1+B1</span> adds two cells</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Download as Excel: File → Download → Microsoft Excel (.xlsx)</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Make a simple monthly budget table with columns: Item, Cost — add 5 items and use SUM formula to get the total</div>
+        <button class="mark-done-btn" onclick="markDone('c10')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c11">
+      <div class="topic-header" onclick="toggleCard('c11')">
+        <div class="topic-icon">🔍</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Searching the internet smartly</div>
+          <div class="topic-desc">Google tips, safe browsing, official sources</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Use specific search words — instead of "SLITHM" search <strong>"SLITHM degree 2026 application fees Sri Lanka"</strong></span></li>
+          <li class="step-item"><span class="step-n">2</span><span>To find a PDF document: add <span class="shortcut">filetype:pdf</span> — e.g. "UGC handbook 2026 filetype:pdf"</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>To search only one website: add <span class="shortcut">site:</span> — e.g. "scholarships site:ugc.ac.lk"</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Safe websites: look for the <strong>padlock icon</strong> in the browser address bar (https) — this means the site is secure</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Government websites end in <span class="shortcut">.gov.lk</span> — universities end in <span class="shortcut">.ac.lk</span> — these are the most trustworthy in Sri Lanka</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Never click pop-ups that say "You won a prize!" or "Your computer has a virus!" — these are always scams</span></li>
+        </ul>
+        <div class="tip"><strong>Tip:</strong> For official information about university admissions, fees, and courses — always go directly to the official website (.ac.lk or .gov.lk) rather than Facebook posts or YouTube videos</div>
+        <button class="mark-done-btn" onclick="markDone('c11')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c12">
+      <div class="topic-header" onclick="toggleCard('c12')">
+        <div class="topic-icon">⬇️</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Downloading & uploading files</div>
+          <div class="topic-desc">Online application forms, PDFs, scanning documents</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Download a file: click the download link on the website → file saves automatically to your <strong>Downloads</strong> folder</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Find downloaded files: open File Explorer (<span class="shortcut">Windows + E</span>) → click <strong>Downloads</strong> on the left side</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Upload a file to a form: click <strong>"Choose file"</strong> or <strong>"Browse"</strong> button → find your file → click Open → it uploads</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Scan documents using your phone: download <strong>CamScanner</strong> app (free) → scan certificate → save as PDF → send to yourself by email</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>For all online applications: take a screenshot of the confirmation page — press <span class="shortcut">Windows + Print Screen</span> to capture screen</span></li>
+        </ul>
+        <div class="tip"><strong>Important for applications:</strong> Always save a digital copy of your NIC, A/L certificate, and O/L certificate as PDF — you will need to upload these for university and job applications</div>
+        <button class="mark-done-btn" onclick="markDone('c12')">✓ Mark as done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 4 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div class="level-num">4</div>
+      <div class="level-title">Networking basics & digital safety</div>
+      <div class="level-sub">Understand the internet & stay safe</div>
+    </div>
+
+    <div class="topic-card" id="c13">
+      <div class="topic-header" onclick="toggleCard('c13')">
+        <div class="topic-icon">🌐</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">What is a computer network?</div>
+          <div class="topic-desc">Internet, WiFi, router, IP address — explained simply</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>A <strong>network</strong> = computers connected together so they can share information with each other</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>The <strong>internet</strong> = a massive worldwide network connecting billions of devices across the whole world</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>A <strong>router</strong> = the box at your home that creates your WiFi and connects your home to the internet</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>An <strong>IP address</strong> = your device's unique address on the network — like a house number on the internet</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>To see your IP address: open browser → search <strong>"what is my ip"</strong> in Google → it shows your IP</span></li>
+          <li class="step-item"><span class="step-n">6</span><span><strong>LAN</strong> (Local Area Network) = your home or office network. <strong>WAN</strong> (Wide Area Network) = the internet itself</span></li>
+          <li class="step-item"><span class="step-n">7</span><span><strong>Bandwidth</strong> = how much data can travel through your connection — higher bandwidth = faster internet</span></li>
+        </ul>
+        <div class="tip"><strong>Think of it like this:</strong> The internet is like the national road network. Your router is the gate of your house. Your IP address is your house number. Data travels like vehicles on these roads.</div>
+        <button class="mark-done-btn" onclick="markDone('c13')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c14">
+      <div class="topic-header" onclick="toggleCard('c14')">
+        <div class="topic-icon">🛡️</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Online scams & how to stay safe</div>
+          <div class="topic-desc">Phishing, fake jobs, fraud — how to spot them</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span><strong>Phishing</strong> = fake emails pretending to be your bank, Google, or government — asking for your password. NEVER click these links</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Check the sender email address carefully — scammers use fake addresses like "google-support@gmail123.net" (notice: not google.com)</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Fake job offers: if any job asks you to pay money first before you start working — it is 100% a scam, always</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Never send your NIC photo, bank account details, or passwords to anyone you don't fully know and trust in real life</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>If something seems too good to be true ("You won Rs. 500,000! Click here!") — it is always a scam</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>On Facebook and Instagram: strangers offering foreign jobs, scholarships, or "easy money" online are almost always scams</span></li>
+        </ul>
+        <div class="warning"><strong>Important for girls:</strong> Sri Lanka has seen many social media scams targeting young women — fake "scholarship" and "modelling" opportunities that lead to dangerous situations. Always verify through official websites and tell a trusted adult</div>
+        <button class="mark-done-btn" onclick="markDone('c14')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c15">
+      <div class="topic-header" onclick="toggleCard('c15')">
+        <div class="topic-icon">☁️</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Google Drive — cloud storage</div>
+          <div class="topic-desc">Store & backup files online, access from anywhere</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span><strong>Cloud storage</strong> = saving your files on the internet so you can access them from any device, anywhere</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Open <strong>drive.google.com</strong> → sign in with Gmail → you get 15GB free storage automatically</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Upload a file: click <strong>"+ New"</strong> → File upload → select your file → it uploads to the cloud</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Access from phone: install <strong>Google Drive</strong> app → sign in with same Gmail → all files appear on your phone</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Share a file: right click the file → Share → enter email or click "Copy link" → share the link</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Always backup these important documents to Drive: NIC copy, A/L certificate, O/L certificate, birth certificate</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Scan your A/L result sheet using CamScanner → save as PDF → upload to Google Drive → test accessing it on your phone</div>
+        <button class="mark-done-btn" onclick="markDone('c15')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c16">
+      <div class="topic-header" onclick="toggleCard('c16')">
+        <div class="topic-icon">💬</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Professional communication</div>
+          <div class="topic-desc">WhatsApp, Zoom, LinkedIn, formal messaging</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>For professional WhatsApp messages: use full sentences, no slang, no abbreviations like "u" or "r u free"</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Formal message structure: Greeting → purpose → your name. Example: <em>"Good morning, I am Dilnisha Perera. I am writing to inquire about..."</em></span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Zoom / Google Meet: used for online interviews and classes — install free app → click Join with meeting link given to you</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Before any video call: check your background is clean and tidy, lighting is good, no loud noise around you</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Create a <strong>LinkedIn</strong> profile (linkedin.com) — add your photo, education, skills. Employers and universities search here</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Email signature: add to every professional email — Name, Contact number, Current qualification</span></li>
+        </ul>
+        <button class="mark-done-btn" onclick="markDone('c16')">✓ Mark as done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVEL 5 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div class="level-num">5</div>
+      <div class="level-title">Career-ready skills</div>
+      <div class="level-sub">Use these for applications right now</div>
+    </div>
+
+    <div class="topic-card" id="c17">
+      <div class="topic-header" onclick="toggleCard('c17')">
+        <div class="topic-icon">📋</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Creating a professional CV</div>
+          <div class="topic-desc">Google Docs template, save as PDF, name the file</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span>Open <strong>docs.google.com</strong> → click Template Gallery (top right) → search "resume" → choose a clean, simple one</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Fill in: Full name, address, phone number, email address, education (A/L results, O/L results), any extra courses, skills</span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Keep it to <strong>1 page</strong> for a fresh graduate — clear and simple is better than long and complicated</span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Download as PDF: File → Download → PDF Document (.pdf) — always send your CV as PDF, not Word format</span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Name the file properly: <span class="shortcut">YourName_CV.pdf</span> — never leave it as "document1.pdf" or "untitled.pdf"</span></li>
+          <li class="step-item"><span class="step-n">6</span><span>No need to add a photo unless specifically asked — keep the design clean and professional</span></li>
+        </ul>
+        <div class="practice"><strong>Practice task</strong>Create your CV using a Google Docs template → fill all sections → download as PDF → save to Google Drive</div>
+        <button class="mark-done-btn" onclick="markDone('c17')">✓ Mark as done</button>
+      </div>
+    </div>
+
+    <div class="topic-card" id="c18">
+      <div class="topic-header" onclick="toggleCard('c18')">
+        <div class="topic-icon">🤖</div>
+        <div class="topic-done-icon">✓</div>
+        <div class="topic-text">
+          <div class="topic-name">Using AI tools (Claude & ChatGPT)</div>
+          <div class="topic-desc">Free study help, writing assistance, research</div>
+        </div>
+        <div class="topic-chevron">⌄</div>
+      </div>
+      <div class="topic-body">
+        <ul class="steps-list">
+          <li class="step-item"><span class="step-n">1</span><span><strong>Claude</strong> (claude.ai) and <strong>ChatGPT</strong> (chatgpt.com) are free AI assistants — sign up with your Gmail account</span></li>
+          <li class="step-item"><span class="step-n">2</span><span>Ask it to explain anything: <em>"Explain what actuarial science is in simple words"</em> or <em>"What is the difference between SLITHM and NSBM?"</em></span></li>
+          <li class="step-item"><span class="step-n">3</span><span>Ask it to help write: <em>"Write a formal email to SLITHM asking about scholarship eligibility for low-income students"</em></span></li>
+          <li class="step-item"><span class="step-n">4</span><span>Use for studying: <em>"Give me 10 practice questions on basic accounting"</em> or <em>"Explain compound interest step by step"</em></span></li>
+          <li class="step-item"><span class="step-n">5</span><span>Use for translations: <em>"Translate this English university letter into Sinhala"</em></span></li>
+          <li class="step-item"><span class="step-n">6</span><span>Always double-check important facts from AI (especially official deadlines, fees, and government rules) on official websites</span></li>
+        </ul>
+        <div class="tip"><strong>Free advantage:</strong> AI tools can replace expensive private tutors for many subjects — use them daily for study. This is one of the biggest free advantages available to students right now</div>
+        <div class="practice"><strong>Practice task</strong>Open claude.ai → ask it to explain what career options are available after an accounting degree in Sri Lanka — read and understand the answer</div>
+        <button class="mark-done-btn" onclick="markDone('c18')">✓ Mark as done</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>IT Essentials Guide</strong> — Prepared for A/L Physical Science (Maths) Stream Students, Sri Lanka<br>
+  <span style="font-size:12px; margin-top:4px; display:block;">© AyanSoft — by Ayanthan Easwaranathan</span>
+</div>
+
+<script>
+  const TOTAL = 18;
+  let doneSet = new Set();
+
+  function toggleCard(id) {
+    let card = document.getElementById(id);
+    let isOpen = card.classList.contains('open');
+    document.querySelectorAll('.topic-card.open').forEach(c => {
+      if (c.id !== id) c.classList.remove('open');
+    });
+    card.classList.toggle('open', !isOpen);
+  }
+
+  function markDone(id) {
+    let card = document.getElementById(id);
+    if (!doneSet.has(id)) {
+      doneSet.add(id);
+    } else {
+      doneSet.delete(id);
+    }
+    card.classList.toggle('done', doneSet.has(id));
+    updateProgress();
+    event.stopPropagation();
+  }
+
+  function updateProgress() {
+    let n = doneSet.size;
+    let pct = Math.round((n / TOTAL) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-text').textContent = n + ' / ' + TOTAL;
+    document.getElementById('done-count').textContent = n + ' Completed';
+  }
+</script>
+</body>
+</html>
